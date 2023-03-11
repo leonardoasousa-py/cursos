@@ -1,0 +1,365 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db.pessoas.insertOne({ nome: "Matheus", idade: 30, profissao: "Programador", esta_empregado: true })
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("64060eb025f0b5dd7aad89e4")
+}
+> show dbs
+admin        0.000GB
+config       0.000GB
+local        0.000GB
+pessoasData  0.000GB
+> show collections
+pessoas
+> db.carros.insertOne({ marca: "Ferrari" })
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("64060f5b25f0b5dd7aad89e5")
+}
+> show collections
+carros
+pessoas
+>-------------------------
+> db.pessoas.insertMany([     {nome: "João", idade:40, profissao:"Arquiteto", esta_empregado: false},     {nome: "Maria", idade:23, profissao:"Professora", esta_empregado: true} ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("6406117b25f0b5dd7aad89e6"),
+                ObjectId("6406117b25f0b5dd7aad89e7")
+        ]
+}
+> db.pessoas.find()
+{ "_id" : ObjectId("64060eb025f0b5dd7aad89e4"), "nome" : "Matheus", "idade" : 30, "profissao" : "Programador", "esta_empregado" : true }
+{ "_id" : ObjectId("6406117b25f0b5dd7aad89e6"), "nome" : "João", "idade" : 40, "profissao" : "Arquiteto", "esta_empregado" : false }
+{ "_id" : ObjectId("6406117b25f0b5dd7aad89e7"), "nome" : "Maria", "idade" : 23, "profissao" : "Professora", "esta_empregado" : true }
+>
+
+--------> db.pessoas.find({ esta_empregado: true}) ###WHERE
+{ "_id" : ObjectId("64060eb025f0b5dd7aad89e4"), "nome" : "Matheus", "idade" : 30, "profissao" : "Programador", "esta_empregado" : true }
+{ "_id" : ObjectId("6406117b25f0b5dd7aad89e7"), "nome" : "Maria", "idade" : 23, "profissao" : "Professora", "esta_empregado" : true }
+
+>
+----------
+
+> db.pessoas.find({ esta_empregado: true}).count()
+2
+---------------------
+
+> db.pessoas.findOne()
+{
+        "_id" : ObjectId("64060eb025f0b5dd7aad89e4"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true
+}
+> db.pessoas.findOne({ nome:"João"})
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e6"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : false
+}
+>
+---------------------
+
+> db.pessoas.updateOne({nome:"João"},{ $set:{ esta_empregado:true}})####Update
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+>
+>
+> db.pessoas.findOne({ nome:"João"})
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e6"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true
+}
+>
+-------------------------
+> db.pessoas.updateMany({}, {$set: {salario:5000 } }) ####Adiciona campo novo pelo proprio update.
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 3 }
+> db.pessoas.find().pretty()
+{
+        "_id" : ObjectId("64060eb025f0b5dd7aad89e4"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e6"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e7"),
+        "nome" : "Maria",
+        "idade" : 23,
+        "profissao" : "Professora",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+>
+------------------------------------------------
+
+> db.pessoas.updateOne({nome:"Matheus"}, {$set: { procurando_emprego: false} })
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.pessoas.find().pretty()
+{
+        "_id" : ObjectId("64060eb025f0b5dd7aad89e4"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true,
+        "salario" : 5000,
+        "procurando_empredo" : false
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e6"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e7"),
+        "nome" : "Maria",
+        "idade" : 23,
+        "profissao" : "Professora",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+>
+------------------------
+> db.pessoas.deleteOne({nome: "Josias"}) #####DELETE
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.pessoas.find().pretty()
+{
+        "_id" : ObjectId("64060eb025f0b5dd7aad89e4"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true,
+        "salario" : 5000,
+        "procurando_empredo" : false
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e6"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+{
+        "_id" : ObjectId("6406117b25f0b5dd7aad89e7"),
+        "nome" : "Maria",
+        "idade" : 23,
+        "profissao" : "Professora",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+>
+
+------------------------
+> db.pessoas.find({ idade: { $gt:30 } }) #### operador maior que 30
+{ "_id" : ObjectId("6406197325f0b5dd7aad89eb"), "nome" : "João", "idade" : 40, "profissao" : "Arquiteto", "esta_empregado" : true, "salario" : 5000 }
+
+------------
+
+> db.pessoas.find({ idade: { $gte:30 } }) #### operador maior e igual 30
+{ "_id" : ObjectId("6406197325f0b5dd7aad89eb"), "nome" : "João", "idade" : 40, "profissao" : "Arquiteto", "esta_empregado" : true, "salario" : 5000 }
+{ "_id" : ObjectId("6406199825f0b5dd7aad89ed"), "nome" : "Matheus", "idade" : 30, "profissao" : "Programador", "esta_empregado" : true, "salario" : 5000 }
+>
+-------------
+
+> db.pessoas.find({ idade: { $lt:25 } })#### operador menor que 25
+{ "_id" : ObjectId("6406197325f0b5dd7aad89ec"), "nome" : "Maria", "idade" : 23, "profissao" : "Professora", "esta_empregado" : true, "salario" : 5000 }
+
+---------------------
+
+> db.pessoas.find({ idade: { $lte:23 } })#### operador maior e igual 23
+{ "_id" : ObjectId("6406197325f0b5dd7aad89ec"), "nome" : "Maria", "idade" : 23, "profissao" : "Professora", "esta_empregado" : true, "salario" : 5000 }
+>
+---------------------------
+
+ db.pessoas.updateMany({idade: {$gt: 35}}, { $set: { prioridade:true}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.pessoas.find().pretty()
+{
+        "_id" : ObjectId("6406197325f0b5dd7aad89eb"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true,
+        "salario" : 5000,
+        "prioridade" : true
+}
+{
+        "_id" : ObjectId("6406197325f0b5dd7aad89ec"),
+        "nome" : "Maria",
+        "idade" : 23,
+        "profissao" : "Professora",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+{
+        "_id" : ObjectId("6406199825f0b5dd7aad89ed"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true,
+        "salario" : 5000
+}
+>
+---------------------------------------------
+db.pessoas.insertOne({
+	nome:"Paula",
+	idade:44,
+	hobbies: ["Correr","Ler","Trilhas"],
+	esta_trabalhando: true,
+	data_cadastro: new Date(),
+	caracteristicas: {
+		cor_dos_olhos:"azuis",
+		altura: 1.82,
+		perfil: "extrovertida"
+}	
+})
+
+-------------------------
+
+> db.pessoas.updateOne({nome: "Matheus"}, {$inc: {salario: 1000}}) ###incremento
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.pessoas.find({nome: "Matheus"}).pretty()
+{
+        "_id" : ObjectId("6406199825f0b5dd7aad89ed"),
+        "nome" : "Matheus",
+        "idade" : 30,
+        "profissao" : "Programador",
+        "esta_empregado" : true,
+        "salario" : 6000
+}
+>
+
+-----------------------------------------------------
+> db.pessoas.updateOne({nome: "João"}, {$inc: {salario: -3000}}) #####decremento
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.pessoas.find().pretty()
+{
+        "_id" : ObjectId("6406197325f0b5dd7aad89eb"),
+        "nome" : "João",
+        "idade" : 40,
+        "profissao" : "Arquiteto",
+        "esta_empregado" : true,
+        "salario" : 2000,
+        "prioridade" : true
+}
+--------------
+
+db.pessoas.createIndex({ "nome": 1}) ###criar indice
+
+----------------------
+
+> db.pessoas.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "nome" : 1
+                },
+                "name" : "nome_1"
+        }
+]
+>
+------------------------
+
+> db.pessoas.explain().find({nome: "João"})
+{
+        "explainVersion" : "1",
+        "queryPlanner" : {
+                "namespace" : "pessoasData.pessoas",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "nome" : {
+                                "$eq" : "Jo├úo"
+                        }
+                },
+                "queryHash" : "7E0AF8FB",
+                "planCacheKey" : "31BF70BE",
+                "maxIndexedOrSolutionsReached" : false,
+                "maxIndexedAndSolutionsReached" : false,
+                "maxScansToExplodeReached" : false,
+                "winningPlan" : {                                  ----------------ganhou na velocidade :  "nome" : 1
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "nome" : 1
+                                },
+                                "indexName" : "nome_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "nome" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "nome" : [
+                                                "[\"Jo├úo\", \"Jo├úo\"]"
+
+-----------------------------------------
+
+> db.pessoas.dropIndex("nome_1")
+{ "nIndexesWas" : 2, "ok" : 1 }
+>
+
+-------------
+> db.pessoas.getIndexes()
+[ { "v" : 2, "key" : { "_id" : 1 }, "name" : "_id_" } ]
+>
+-------------------
+
+> db.pessoas.drop()
+true
+> show collections
+carros
+> db.pessoas.drop()
+false
+> show collections
+carros
+> db.dropDatabase()
+{ "ok" : 1 }
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+>
+-----------------------
+
+
+
+
+
+
+
+

@@ -1,0 +1,169 @@
+atalho para terminal : ctrl + alt + T
+
+o ~antes do $ significa que estou na home no meu diretorio.
+-------
+cd: comando para mudar de diretotio.
+ex: 	cd Documents
+	cd home/user/Desktop/
+
+cd ..: volta um diretorio.
+cd ../..: volta dois diretorios.
+cd ~: vai direto para home do usuario.
+-------
+ls: listagem de itens
+-------
+parametro
+ls -l: 
+permissão: drwxr-xr-x | hardlinks: 2 | usuarioDono: vboxuser | grupoDono: vboxuser | tamanho em byte: 4096 | dataModificação: mar 8 19:05 | nomeDoArquivoOuDiretorio: Desktop
+drwxr-xr-x 2 vboxuser	vboxuser 4096 mar 8 19:05 Desktop
+-------
+ls -a: ver arquivos ocultos
+ls -la: pode juntar parametros
+-------
+ls -lh:ver tamanho em kbyte
+-------
+ls -ltr: listagem detalhada ordenado pela data de modificação.
+ls -lt /var/ (posso aplicar diretorio que eu queira ver a listagem detalhada.)
+-------
+touch: ele cria um arquivo e alterar data de modificação do arquivo.
+ex: touch teste.txt
+-------
+cat (nome-do-arquivo):mostra o conteudo do arquivo escolhido.
+cat (nome-do-arquivo) (nome-do-arquivo2): possivel concatenar dois arquivos.
+ex: cat arquivo.txt arquivo2.txt
+
+cat (nome-do-arquivo) (nome-do-arquivo2) > (nome-do-arquivo3): cria um terceiro aquivo com as inforações dos outros 2.
+-------
+cat -n (nome-do-arquivo): mostra numero de linhas do arquivo.
+-------
+cat > (nome-do-arquivo): cria um arquivo ja editando o conteudo dentro dele. Apertando crtl+c sai da edição.
+-------
+history: lista de comando digitado pela gente nos ultimos comando.
+-------
+ctrl+r: reverse search - busca de comandos digitados no history.
+-------
+mkdir (nome-da-pasta ou diretorio): cria um ou mais diretorios ou pastas.
+ex: mkdir (nome-do-diretorio) (nome-do-diretorio2)
+
+mkdir -v (nome-da-pasta ou diretorio): mostra a criação do diretorio detalhado.
+mkdir -p dir3/pasta: cria uma estrutura de diretorios
+-------
+rmdir (nome-da-pasta ou diretorio): delete um ou mais diretorios ou pastas.
+ex: rmdir (nome-do-diretorio) (nome-do-diretorio2)
+rmdir -p dir3/dir4/dir5: apaga toda estrutura.
+-------
+rm (nome-do-arquivo): remove um arquivo.###não dá para remover diretorios vazios.
+rm -i (nome-do-arquivo): cria uma trava se queremos deletar o arquivo ou não.
+rm -rf (nome-do-diretorio): remove a pasta e tudo dentro. 
+rm -d (nome-do-diretorio): remove diretorio msm vazio.
+-------
+cp (nome-do-arquivo-a-ser-copiado) (nome-da-copia-do-arquivo): copiar um arquivo.
+ex: cp arquivo10.txt arquivo11.txt
+
+cp -r (nome-do-diretorio-a-ser-copiado) (nome-da-copia-do-diretorio): copia o diretorio.
+cp (nome-do-arquivo-a-ser-copiado) (nome-do-diretorio): copia um arquivo para dentro de um diretorio.
+-------
+mv (arquivo-base) (cria-novo-arquivo-para-destino): mover arquivo-base e cria um novo arquivo para destino. # ele apaga o arquivo-base
+mv dir1/* dir3/: move td de dir1 para dir3
+-------
+
+-------
+apt-get update: atualização de pacotes e dependencias.
+
+apt-get upgrade: atualização de pacotes e dependencias.
+
+apt-get install (nome-do-pacote): instalar novo pacote.
+ex: apt-get install tree
+
+apt-get purge (nome-do-pacote): delete pacote.
+
+apt-get dist-upgrade: Atualiza o linux.
+
+-------
+sudo adduser (nome-do-usuario): criar usuario. #o ubuntu pede informações do usuario.
+-------
+getent passwd: ver tds usuario no sistema.
+-------
+sudo userdel --remove (nome-do-usuario): remove usuario desejado.
+-------
+getent group: ver tds grupos
+-------
+groupadd devs: criar grupo
+-------
+sudo groupdel (nome-do-grupo):deletar um grupo.
+-------
+sudo usermod -a -G (nome-do-grupo) (nome-do-usuario): adicionar um usuario em um grupo.
+-------
+groups (nome-do-usuario): verificar de usuario esta no grupo.
+-------
+su root: comando para selecionar usuario root
+-------
+sudo:tranforma a gente adm temporariamente(root).
+-------
+sudo su: tranforma a gente em super usuario e ao digitar exit deixamos de ser.
+-------
+top: mostra os processos no sistema e ctrl+c sai do comando
+-------
+sudo apt-get install htop
+htop: pacote de ver processos no sistema e ctrl+c sai do comando.
+-------
+
+Permissão numerica
+
+1 222 333 444 = drwxr-xr-x
+
+1:serve para d ou -: diretorio ou arquivo
+222: permissão de owner(dono)
+333: permissão de grupo
+444: permissão usuario
+
+d:diretorio
+r:ler
+w:escrever ou editar
+x:executar
+-: não há permissão
+
+chmod: comando de permissão.
+
+nomeclatura:
+0: sem permissão -
+1: executar --x
+2: escrever -w-
+3: ler e escrever -wx
+4: ler r--
+5: ler executar r-x
+6: ler e escrever rw-
+7: ler ,escrever, executar rwx
+
+ex:	chmod 777 arquivo: tds as permissão. * nunca fazer
+	chmod 400 arquivo: só dono tem permissão de leitura
+	chmod 765 arquivo: dono todas as permissões , grupo pode ler e alterar e demais só ler.
+	chmod 755 arquivo: dono tem tds permissões , grupo e outros só ler e executa.
+	chmod 000 arquivo: ninguem mais tem permissão para nada, só com sudo ou root.
+
+-----------
+Permissão simbolico
+
+g: grupo
+o: outros
+a: todos
++: adicionar permissão a um arquivo ou diretorio
+-: remove permissão a um arquivo ou diretorio
+=: determina as permissoes , substituindo as anteriores
+u:dono do arquivo(user/owner)
+x: executa
+r: ler
+w: escrever ou editar
+
+chmod o=x: concede permissão de executar para outros
+chmod a=rwx: concede tds permissão a tds
+chmod g-w:removendo permissão de escrever para grupo
+chmod u+rw: concede permissão de ler e escrever para user / owner
+-----------
+sudo chown (nome-do-usuario) (nome-do-arquivo): mudando o arquivo de owner
+sudo chown (nome-do-usuario):(nome-do-grupo) (nome-do-arquivo): mudando o arquivo de owner e grupo
+-----------
+sudo chgrp (nome-do-grupo) (nome-do-arquivo): muda apenas o grupo
+-----------
+nano (nome-do-arquivo): comando para editar um texto.
+-----------

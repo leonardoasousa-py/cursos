@@ -1,0 +1,51 @@
+git init: inicializa o versionamento.
+git status: Esse comando indica o estado do seu repositório. Em outras palavras, ele vai listar todos os arquivos que foram modificados desde o seu último.
+
+git add "arquivo_para_branch": adiciona o arquivo para controle de versão.
+git add.: sobre todos arquivos
+
+git commit -m "commit inicial": -m para colocar mensagem do que foi feito dentro do commit.
+				se foi a prieira vez ele vai pedir email e o nome.
+
+
+*****Criar um repositorio no github usando menu suspenso mais +********
+
+git remote add origin (link): define para onde o codigo vai ser enviado.
+git push:para enviar o codigo.
+
+git push --set-upstream origin master: como meu primeiro envio vou precisar ajustar.
+
+-----------------------------
+git reflog: historico de versões
+
+git reset --hard (id da versão): volta para versão escolhida.
+
+git branch: mostra as branch disponivel.
+git branch (nome da nova branch): criar uma nova branch
+
+git checkout (nome da branch): seleciona a branch que vc quer trabalhar.
+
+git pull : trazer as atualização do servidor para maquina local.
+git merge (nome da branch que vc quer puxar) : traz o codigo de outra branch para a branch selecionada.
+
+
+touch gitignore: no local vai criar um arquivo txt e dentro coloco o que não quero que seja enviado exemplo:segredos/
+
+
+
+------------------------
+REAL
+
+git branch: ver a branch se preciso dar checkout.
+git pull: verificar se esta com cod atual.
+git checkout -b sistema-de-login master: criar uma branch atraves da branch princial(-b)
+git add . #foi feito um txt novo na pasta.
+git status
+git commit -m "criado sistema de login"
+git checkout master
+git branch
+git pull
+git merge sistema-de-login
+git push
+
+----------------------------------------------------
